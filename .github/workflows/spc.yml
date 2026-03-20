@@ -1,33 +1,104 @@
-name: Post SPC Ohio Tornado Outlook
+name: SPC Smart Update
 
 on:
   schedule:
-    # SPC release times converted to UTC
-    - cron: "0 6 * * *"    # 06Z
-    - cron: "0 13 * * *"   # 13Z
-    - cron: "30 16 * * *"  # 1630Z
-    - cron: "0 20 * * *"   # 20Z
-    - cron: "0 1 * * *"    # 01Z
-  workflow_dispatch: # lets you run manually
+    - cron: "*/10 * * * *" # every 10 minutes
+  workflow_dispatch:
 
 jobs:
-  post:
+  check-and-post:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Send to Discord
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Download image
+        run: |
+          curl -o tornado.png https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png
+
+      - name: Generate hash
+        run: |
+          sha256sum tornado.png > new_hash.txt
+
+      - name: Compare with previous hash
+        id: compare
+        run: |
+          if [ -f last_hash.txt ]; then
+            if cmp -s new_hash.txt last_hash.txt; then
+              echo "same=true" >> $GITHUB_OUTPUT
+            else
+              echo "same=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "same=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Post to Discord if changed
+        if: steps.compare.outputs.same == 'false'
         run: |
           TIMESTAMP=$(date +%s)
-
-          IMAGE_URL="https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP"
+          URL="https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP"
 
           curl -H "Content-Type: application/json" \
-          -d "{
-            \"content\": \"🌪️ Ohio Tornado Outlook Update\",
-            \"embeds\": [{
-              \"image\": {
-                \"url\": \"$IMAGE_URL\"
-              }
-            }]
-          }" \
+          -d "{\"content\":\"🌪️ Updated Day 1 Ohio Tornado Outlook\",\"embeds\":[{\"image\":{\"url\":\"$URL\"}}]}" \
           ${{ secrets.DISCORD_WEBHOOK }}
+
+      - name: Save new hash
+        run: |
+          mv new_hash.txt last_hash.txt
+
+      - name: Commit hash
+        run: |
+          git config --global user.name "bot"
+          git config --global user.email "bot@github.com"
+          git add last_hash.txt
+          git commit -m "Update hash" || echo "No changes"
+          git push
+
+steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Download image
+        run: |
+          curl -o tornado.png https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png
+
+      - name: Generate hash
+        run: |
+          sha256sum tornado.png > new_hash.txt
+
+      - name: Compare with previous hash
+        id: compare
+        run: |
+          if [ -f last_hash.txt ]; then
+            if cmp -s new_hash.txt last_hash.txt; then
+              echo "same=true" >> $GITHUB_OUTPUT
+            else
+              echo "same=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "same=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Post to Discord if changed
+        if: steps.compare.outputs.same == 'false'
+        run: |
+          TIMESTAMP=$(date +%s)
+          URL="https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png?t=$TIMESTAMP"
+
+          curl -H "Content-Type: application/json" \
+          -d "{\"content\":\"🌪️ Updated Day 2 Ohio Tornado Outlook\",\"embeds\":[{\"image\":{\"url\":\"$URL\"}}]}" \
+          ${{ secrets.DISCORD_WEBHOOK }}
+
+      - name: Save new hash
+        run: |
+          mv new_hash.txt last_hash.txt
+
+      - name: Commit hash
+        run: |
+          git config --global user.name "bot"
+          git config --global user.email "bot@github.com"
+          git add last_hash.txt
+          git commit -m "Update hash" || echo "No changes"
+          git push
