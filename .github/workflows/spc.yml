@@ -56,7 +56,6 @@ jobs:
           git commit -m "Update hash" || echo "No changes"
           git push
 
-    steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
