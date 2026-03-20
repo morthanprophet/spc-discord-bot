@@ -1,0 +1,33 @@
+name: Post SPC Ohio Tornado Outlook
+
+on:
+  schedule:
+    # SPC release times converted to UTC
+    - cron: "0 6 * * *"    # 06Z
+    - cron: "0 13 * * *"   # 13Z
+    - cron: "30 16 * * *"  # 1630Z
+    - cron: "0 20 * * *"   # 20Z
+    - cron: "0 1 * * *"    # 01Z
+  workflow_dispatch: # lets you run manually
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send to Discord
+        run: |
+          TIMESTAMP=$(date +%s)
+
+          IMAGE_URL="https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP"
+
+          curl -H "Content-Type: application/json" \
+          -d "{
+            \"content\": \"🌪️ Ohio Tornado Outlook Update\",
+            \"embeds\": [{
+              \"image\": {
+                \"url\": \"$IMAGE_URL\"
+              }
+            }]
+          }" \
+          ${{ secrets.DISCORD_WEBHOOK }}
