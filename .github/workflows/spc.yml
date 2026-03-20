@@ -2,7 +2,7 @@ name: SPC Smart Update
 
 on:
   schedule:
-    - cron: "*/10 * * * *" # every 10 minutes
+    - cron: "*/10 * * * *"
   workflow_dispatch:
 
 jobs:
@@ -13,29 +13,32 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Download image
+      # -------------------
+      # DAY 1
+      # -------------------
+      - name: Download Day 1
         run: |
-          curl -o tornado.png https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png
+          curl -o day1.png https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png
 
-      - name: Generate hash
+      - name: Hash Day 1
         run: |
-          sha256sum tornado.png > new_hash.txt
+          sha256sum day1.png > day1_hash.txt
 
-      - name: Compare with previous hash
-        id: compare
+      - name: Compare Day 1
+        id: compare_day1
         run: |
-          if [ -f last_hash.txt ]; then
-            if cmp -s new_hash.txt last_hash.txt; then
-              echo "same=true" >> $GITHUB_OUTPUT
+          if [ -f last_day1_hash.txt ]; then
+            if cmp -s day1_hash.txt last_day1_hash.txt; then
+              echo "changed=false" >> $GITHUB_OUTPUT
             else
-              echo "same=false" >> $GITHUB_OUTPUT
+              echo "changed=true" >> $GITHUB_OUTPUT
             fi
           else
-            echo "same=false" >> $GITHUB_OUTPUT
+            echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
-      - name: Post to Discord if changed
-        if: steps.compare.outputs.same == 'false'
+      - name: Post Day 1
+        if: steps.compare_day1.outputs.changed == 'true'
         run: |
           TIMESTAMP=$(date +%s)
           URL="https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP"
@@ -44,44 +47,32 @@ jobs:
           -d "{\"content\":\"🌪️ Updated Day 1 Ohio Tornado Outlook\",\"embeds\":[{\"image\":{\"url\":\"$URL\"}}]}" \
           ${{ secrets.DISCORD_WEBHOOK }}
 
-      - name: Save new hash
+      # -------------------
+      # DAY 2
+      # -------------------
+      - name: Download Day 2
         run: |
-          mv new_hash.txt last_hash.txt
+          curl -o day2.png https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png
 
-      - name: Commit hash
+      - name: Hash Day 2
         run: |
-          git config --global user.name "bot"
-          git config --global user.email "bot@github.com"
-          git add last_hash.txt
-          git commit -m "Update hash" || echo "No changes"
-          git push
+          sha256sum day2.png > day2_hash.txt
 
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Download image
+      - name: Compare Day 2
+        id: compare_day2
         run: |
-          curl -o tornado.png https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png
-
-      - name: Generate hash
-        run: |
-          sha256sum tornado.png > new_hash.txt
-
-      - name: Compare with previous hash
-        id: compare
-        run: |
-          if [ -f last_hash.txt ]; then
-            if cmp -s new_hash.txt last_hash.txt; then
-              echo "same=true" >> $GITHUB_OUTPUT
+          if [ -f last_day2_hash.txt ]; then
+            if cmp -s day2_hash.txt last_day2_hash.txt; then
+              echo "changed=false" >> $GITHUB_OUTPUT
             else
-              echo "same=false" >> $GITHUB_OUTPUT
+              echo "changed=true" >> $GITHUB_OUTPUT
             fi
           else
-            echo "same=false" >> $GITHUB_OUTPUT
+            echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
-      - name: Post to Discord if changed
-        if: steps.compare.outputs.same == 'false'
+      - name: Post Day 2
+        if: steps.compare_day2.outputs.changed == 'true'
         run: |
           TIMESTAMP=$(date +%s)
           URL="https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png?t=$TIMESTAMP"
@@ -90,14 +81,18 @@ jobs:
           -d "{\"content\":\"🌪️ Updated Day 2 Ohio Tornado Outlook\",\"embeds\":[{\"image\":{\"url\":\"$URL\"}}]}" \
           ${{ secrets.DISCORD_WEBHOOK }}
 
-      - name: Save new hash
+      # -------------------
+      # SAVE HASHES
+      # -------------------
+      - name: Save hashes
         run: |
-          mv new_hash.txt last_hash.txt
+          mv day1_hash.txt last_day1_hash.txt
+          mv day2_hash.txt last_day2_hash.txt
 
-      - name: Commit hash
+      - name: Commit hashes
         run: |
           git config --global user.name "bot"
           git config --global user.email "bot@github.com"
-          git add last_hash.txt
-          git commit -m "Update hash" || echo "No changes"
+          git add last_day1_hash.txt last_day2_hash.txt
+          git commit -m "Update hashes" || echo "No changes"
           git push
