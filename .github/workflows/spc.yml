@@ -86,7 +86,7 @@ jobs:
       # -------------------
       - name: Download Day 3
         run: |
-          curl -o day2.png https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png
+          curl -o day3.png https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png
  
       - name: Hash Day 3
         run: |
