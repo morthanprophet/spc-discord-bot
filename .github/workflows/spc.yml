@@ -112,7 +112,7 @@ jobs:
           URL="https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP"
 
           curl -H "Content-Type: application/json" \
-          -d "{\"content\":\"🌪️ Updated Day 3 Ohio Problematic Outlook\",\"embeds\":[{\"image\":{\"url\":\"$URL\"}}]}" \
+          -d "{\"content\":\"🌪️ Updated Day 3 Ohio Probalistic Outlook (Tornado Outlooks do not issue for Day 3)\",\"embeds\":[{\"image\":{\"url\":\"$URL\"}}]}" \
           ${{ secrets.DISCORD_WEBHOOK }}         
 
       # -------------------
