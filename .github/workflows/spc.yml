@@ -82,17 +82,52 @@ jobs:
           ${{ secrets.DISCORD_WEBHOOK }}
 
       # -------------------
+      # DAY 3
+      # -------------------
+      - name: Download Day 3
+        run: |
+          curl -o day2.png https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png
+ 
+      - name: Hash Day 3
+        run: |
+          sha256sum day3.png > day3_hash.txt
+
+      - name: Compare Day 3
+        id: compare_day3
+        run: |
+          if [ -f last_day3_hash.txt ]; then
+            if cmp -s day3_hash.txt last_day3_hash.txt; then
+              echo "changed=false" >> $GITHUB_OUTPUT
+            else
+              echo "changed=true" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Post Day 3
+        if: steps.compare_day3.outputs.changed == 'true'
+        run: |
+          TIMESTAMP=$(date +%s)
+          URL="https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP"
+
+          curl -H "Content-Type: application/json" \
+          -d "{\"content\":\"🌪️ Updated Day 3 Ohio Problematic Outlook\",\"embeds\":[{\"image\":{\"url\":\"$URL\"}}]}" \
+          ${{ secrets.DISCORD_WEBHOOK }}         
+
+      # -------------------
       # SAVE HASHES
       # -------------------
       - name: Save hashes
         run: |
           mv day1_hash.txt last_day1_hash.txt
           mv day2_hash.txt last_day2_hash.txt
+          mv day3_hash.txt last_day3_hash.txt
 
       - name: Commit hashes
         run: |
           git config --global user.name "bot"
           git config --global user.email "bot@github.com"
-          git add last_day1_hash.txt last_day2_hash.txt
+          git add last_day1_hash.txt last_day2_hash.txt last_day3_hash.txt
           git commit -m "Update hashes" || echo "No changes"
           git push
