@@ -87,7 +87,7 @@ jobs:
       - name: Download Day 3
         run: |
           curl -o day3.png https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png
- 
+
       - name: Hash Day 3
         run: |
           sha256sum day3.png > day3_hash.txt
@@ -112,8 +112,8 @@ jobs:
           URL="https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP"
 
           curl -H "Content-Type: application/json" \
-          -d "{\"content\":\"🌪️ Latest Update: OH Day 3 Severe Weather Outlook (Tornado Outlooks are not issued for Day 3 Outlooks)\",\"embeds\":[{\"image\":{\"url\":\"$URL\"}}]}" \
-          ${{ secrets.DISCORD_WEBHOOK }}         
+          -d "{\"content\":\"🌪️ Latest Update: OH Day 3 Severe Weather Outlook\",\"embeds\":[{\"image\":{\"url\":\"$URL\"}}]}" \
+          ${{ secrets.DISCORD_WEBHOOK }}
 
       # -------------------
       # SAVE HASHES
