@@ -44,7 +44,7 @@ jobs:
           URL="https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP"
 
           curl -H "Content-Type: application/json" \
-          -d "{\"content\":\"🌪️ Updated Day 1 Ohio Tornado Outlook\",\"embeds\":[{\"image\":{\"url\":\"$URL\"}}]}" \
+          -d "{\"content\":\"🌪️ Latest Update: OH Day 1 Tornado Outlook\",\"embeds\":[{\"image\":{\"url\":\"$URL\"}}]}" \
           ${{ secrets.DISCORD_WEBHOOK }}
 
       # -------------------
@@ -78,7 +78,7 @@ jobs:
           URL="https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png?t=$TIMESTAMP"
 
           curl -H "Content-Type: application/json" \
-          -d "{\"content\":\"🌪️ Updated Day 2 Ohio Tornado Outlook\",\"embeds\":[{\"image\":{\"url\":\"$URL\"}}]}" \
+          -d "{\"content\":\"🌪️ Latest Update: OH Day 2 Tornado Outlook\",\"embeds\":[{\"image\":{\"url\":\"$URL\"}}]}" \
           ${{ secrets.DISCORD_WEBHOOK }}
 
       # -------------------
@@ -112,7 +112,7 @@ jobs:
           URL="https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP"
 
           curl -H "Content-Type: application/json" \
-          -d "{\"content\":\"🌪️ Updated Day 3 Ohio Probalistic Outlook (Tornado Outlooks do not issue for Day 3)\",\"embeds\":[{\"image\":{\"url\":\"$URL\"}}]}" \
+          -d "{\"content\":\"🌪️ Latest Update: OH Day 3 Severe Weather Outlook (Tornado Outlooks are not issued for Day 3 Outlooks)\",\"embeds\":[{\"image\":{\"url\":\"$URL\"}}]}" \
           ${{ secrets.DISCORD_WEBHOOK }}         
 
       # -------------------
