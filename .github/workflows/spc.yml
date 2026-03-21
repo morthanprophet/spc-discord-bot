@@ -42,79 +42,100 @@ jobs:
       - name: Compare All
         id: compare
         run: |
-          CHANGED=false
+          DAY1_CHANGED=false
+          DAY2_CHANGED=false
+          DAY3_CHANGED=false
 
-          for i in 1 2 3; do
-            if [ -f last_day${i}_hash.txt ]; then
-              if ! cmp -s day${i}_hash.txt last_day${i}_hash.txt; then
-                CHANGED=true
-              fi
-            else
-              CHANGED=true
-            fi
-          done
+          if [ ! -f last_day1_hash.txt ] || ! cmp -s day1_hash.txt last_day1_hash.txt; then
+            DAY1_CHANGED=true
+          fi
 
-          echo "changed=$CHANGED" >> $GITHUB_OUTPUT
+          if [ ! -f last_day2_hash.txt ] || ! cmp -s day2_hash.txt last_day2_hash.txt; then
+            DAY2_CHANGED=true
+          fi
+
+          if [ ! -f last_day3_hash.txt ] || ! cmp -s day3_hash.txt last_day3_hash.txt; then
+            DAY3_CHANGED=true
+          fi
+
+          ANY_CHANGED=false
+          if [ "$DAY1_CHANGED" = true ] || [ "$DAY2_CHANGED" = true ] || [ "$DAY3_CHANGED" = true ]; then
+            ANY_CHANGED=true
+          fi
+
+          echo "day1=$DAY1_CHANGED" >> $GITHUB_OUTPUT
+          echo "day2=$DAY2_CHANGED" >> $GITHUB_OUTPUT
+          echo "day3=$DAY3_CHANGED" >> $GITHUB_OUTPUT
+          echo "any=$ANY_CHANGED" >> $GITHUB_OUTPUT
 
       # -------------------
-      # POST IN ORDER
+      # HEADER (ONLY IF ANY CHANGE)
       # -------------------
-      - name: Post All Days (in order)
-  if: steps.trigger.outputs.post == 'true'
-  run: |
-    TIMESTAMP=$(date +%s)
+      - name: Post Header
+        if: steps.compare.outputs.any == 'true'
+        run: |
+          curl -H "Content-Type: application/json" \
+          -d "{\"content\":\"🚨 Latest Update:\"}" \
+          ${{ secrets.DISCORD_WEBHOOK }}
 
-    # Header
-    curl -H "Content-Type: application/json" \
-    -d @- ${{ secrets.DISCORD_WEBHOOK }} <<EOF
-    {
-      "content": "🚨 Latest Update:"
-    }
+      # -------------------
+      # DAY 1
+      # -------------------
+      - name: Post Day 1
+        if: steps.compare.outputs.day1 == 'true'
+        run: |
+          TIMESTAMP=$(date +%s)
+
+          curl -H "Content-Type: application/json" \
+          -d @- ${{ secrets.DISCORD_WEBHOOK }} <<EOF
+          {
+            "content": "🌪️ Day 1 Tornado Outlook",
+            "embeds": [{
+              "image": {
+                "url": "https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP"
+              }
+            }]
+          }
 EOF
 
-    sleep 2
+      # -------------------
+      # DAY 2
+      # -------------------
+      - name: Post Day 2
+        if: steps.compare.outputs.day2 == 'true'
+        run: |
+          TIMESTAMP=$(date +%s)
 
-    # Day 1
-    curl -H "Content-Type: application/json" \
-    -d @- ${{ secrets.DISCORD_WEBHOOK }} <<EOF
-    {
-      "content": "🌪️ Day 1 Tornado Outlook",
-      "embeds": [{
-        "image": {
-          "url": "https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP"
-        }
-      }]
-    }
+          curl -H "Content-Type: application/json" \
+          -d @- ${{ secrets.DISCORD_WEBHOOK }} <<EOF
+          {
+            "content": "🌪️ Day 2 Tornado Outlook",
+            "embeds": [{
+              "image": {
+                "url": "https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png?t=$TIMESTAMP"
+              }
+            }]
+          }
 EOF
 
-    sleep 2
+      # -------------------
+      # DAY 3
+      # -------------------
+      - name: Post Day 3
+        if: steps.compare.outputs.day3 == 'true'
+        run: |
+          TIMESTAMP=$(date +%s)
 
-    # Day 2
-    curl -H "Content-Type: application/json" \
-    -d @- ${{ secrets.DISCORD_WEBHOOK }} <<EOF
-    {
-      "content": "🌪️ Day 2 Tornado Outlook",
-      "embeds": [{
-        "image": {
-          "url": "https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png?t=$TIMESTAMP"
-        }
-      }]
-    }
-EOF
-
-    sleep 2
-
-    # Day 3
-    curl -H "Content-Type: application/json" \
-    -d @- ${{ secrets.DISCORD_WEBHOOK }} <<EOF
-    {
-      "content": "🌪️ Day 3 Severe Weather Outlook",
-      "embeds": [{
-        "image": {
-          "url": "https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP"
-        }
-      }]
-    }
+          curl -H "Content-Type: application/json" \
+          -d @- ${{ secrets.DISCORD_WEBHOOK }} <<EOF
+          {
+            "content": "🌪️ Day 3 Severe Weather Outlook",
+            "embeds": [{
+              "image": {
+                "url": "https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP"
+              }
+            }]
+          }
 EOF
 
       # -------------------
