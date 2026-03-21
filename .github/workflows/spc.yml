@@ -59,7 +59,7 @@ jobs:
       # -------------------
       # POST IN ORDER
       # -------------------
-      - name: Post All Days (in order)
+      - name: Post All (in order)
   if: steps.trigger.outputs.post == 'true'
   run: |
     TIMESTAMP=$(date +%s)
