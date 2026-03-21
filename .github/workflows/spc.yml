@@ -65,7 +65,7 @@ jobs:
           TIMESTAMP=$(date +%s)
 
           curl -H "Content-Type: application/json" \
-          -d "{\"content\":\"🌪️ OH Day 1 Tornado Outlook\",\"embeds\":[{\"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP\"}}]}" \
+          -d "{\"content\":\"🚨 Latest Update: 🌪️ OH Day 1 Tornado Outlook\",\"embeds\":[{\"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP\"}}]}" \
           ${{ secrets.DISCORD_WEBHOOK }}
 
           sleep 2
@@ -77,7 +77,7 @@ jobs:
           sleep 2
 
           curl -H "Content-Type: application/json" \
-          -d "{\"content\":\"🌪️ OH Day 3 Severe Weather Outlook\",\"embeds\":[{\"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP\"}}]}" \
+          -d "{\"content\":\"⛈️ OH Day 3 Severe Weather Outlook\",\"embeds\":[{\"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP\"}}]}" \
           ${{ secrets.DISCORD_WEBHOOK }}
 
       # -------------------
