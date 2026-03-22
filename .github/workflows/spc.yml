@@ -1,4 +1,4 @@
-name: SPC Smart Update
+name: SPC OH Smart Update
 
 on:
   schedule:
@@ -21,115 +21,95 @@ jobs:
         with:
           persist-credentials: true
 
-      # ✅ IMPORTANT: ensure latest hashes are pulled
       - name: Pull latest changes
         run: git pull origin ${{ github.ref_name }}
 
       # -------------------
-      # DAY 1
+      # DOWNLOAD ALL DAYS
       # -------------------
       - name: Download Day 1
+        run: curl -L -H "Cache-Control: no-cache" -o day1.png "https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?nocache=$(date +%s)"
+
+      - name: Download Day 2
+        run: curl -L -H "Cache-Control: no-cache" -o day2.png "https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png?nocache=$(date +%s)"
+
+      - name: Download Day 3
+        run: curl -L -H "Cache-Control: no-cache" -o day3.png "https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?nocache=$(date +%s)"
+
+      # -------------------
+      # HASH ALL
+      # -------------------
+      - name: Hash files
         run: |
-          curl -L -H "Cache-Control: no-cache" -o day1.png "https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?nocache=$(date +%s)"
+          sha256sum day1.png > day1_hash.txt
+          sha256sum day2.png > day2_hash.txt
+          sha256sum day3.png > day3_hash.txt
 
-      - name: Hash Day 1
-        run: sha256sum day1.png > day1_hash.txt
-
+      # -------------------
+      # COMPARE DAY 1
+      # -------------------
       - name: Compare Day 1
         id: compare_day1
         run: |
-          if [ -f last_day1_hash.txt ]; then
-            if cmp -s day1_hash.txt last_day1_hash.txt; then
-              echo "changed=false" >> $GITHUB_OUTPUT
-            else
-              echo "changed=true" >> $GITHUB_OUTPUT
-            fi
+          if [ -f last_day1_hash.txt ] && cmp -s day1_hash.txt last_day1_hash.txt; then
+            echo "changed=false" >> $GITHUB_OUTPUT
           else
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
-      # 🔍 Debug (optional)
-      - name: Debug Day 1 hashes
-        run: |
-          echo "Current:"
-          cat day1_hash.txt
-          echo "Previous:"
-          cat last_day1_hash.txt || echo "No previous hash"
-
-      - name: Post Day 1
-        if: steps.compare_day1.outputs.changed == 'true'
-        run: |
-          TIMESTAMP=$(date +%s)
-          URL="https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP"
-
-          curl -H "Content-Type: application/json" \
-          -d "{\"content\":\"🚨 Latest Update:\\n\\n🌪️ OH Day 1 Tornado Outlook\",\"embeds\":[{\"image\":{\"url\":\"$URL\"}}]}" \
-          ${{ secrets.DISCORD_WEBHOOK }}
-
       # -------------------
-      # DAY 2
+      # COMPARE DAY 2
       # -------------------
-      - name: Download Day 2
-        run: |
-          curl -L -H "Cache-Control: no-cache" -o day2.png "https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png?nocache=$(date +%s)"
-
-      - name: Hash Day 2
-        run: sha256sum day2.png > day2_hash.txt
-
       - name: Compare Day 2
         id: compare_day2
         run: |
-          if [ -f last_day2_hash.txt ]; then
-            if cmp -s day2_hash.txt last_day2_hash.txt; then
-              echo "changed=false" >> $GITHUB_OUTPUT
-            else
-              echo "changed=true" >> $GITHUB_OUTPUT
-            fi
+          if [ -f last_day2_hash.txt ] && cmp -s day2_hash.txt last_day2_hash.txt; then
+            echo "changed=false" >> $GITHUB_OUTPUT
           else
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
-      - name: Post Day 2
-        if: steps.compare_day2.outputs.changed == 'true'
-        run: |
-          TIMESTAMP=$(date +%s)
-          URL="https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png?t=$TIMESTAMP"
-
-          curl -H "Content-Type: application/json" \
-          -d "{\"content\":\"🌪️ OH Day 2 Tornado Outlook\",\"embeds\":[{\"image\":{\"url\":\"$URL\"}}]}" \
-          ${{ secrets.DISCORD_WEBHOOK }}
-
       # -------------------
-      # DAY 3
+      # COMPARE DAY 3
       # -------------------
-      - name: Download Day 3
-        run: |
-          curl -L -H "Cache-Control: no-cache" -o day3.png "https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?nocache=$(date +%s)"
-
-      - name: Hash Day 3
-        run: sha256sum day3.png > day3_hash.txt
-
       - name: Compare Day 3
         id: compare_day3
         run: |
-          if [ -f last_day3_hash.txt ]; then
-            if cmp -s day3_hash.txt last_day3_hash.txt; then
-              echo "changed=false" >> $GITHUB_OUTPUT
-            else
-              echo "changed=true" >> $GITHUB_OUTPUT
-            fi
+          if [ -f last_day3_hash.txt ] && cmp -s day3_hash.txt last_day3_hash.txt; then
+            echo "changed=false" >> $GITHUB_OUTPUT
           else
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
-      - name: Post Day 3
-        if: steps.compare_day3.outputs.changed == 'true'
+      # -------------------
+      # POST (ORDERED)
+      # -------------------
+      - name: Post Full Outlook (Ordered)
+        if: steps.compare_day1.outputs.changed == 'true' || steps.compare_day2.outputs.changed == 'true' || steps.compare_day3.outputs.changed == 'true'
         run: |
           TIMESTAMP=$(date +%s)
-          URL="https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP"
 
+          URL1="https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP"
+          URL2="https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png?t=$TIMESTAMP"
+          URL3="https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP"
+
+          # Day 1 (with header)
           curl -H "Content-Type: application/json" \
-          -d "{\"content\":\"🌪️ OH Day 3 Severe Weather Outlook\",\"embeds\":[{\"image\":{\"url\":\"$URL\"}}]}" \
+          -d "{\"content\":\"🚨 Latest SPC Outlook Update (OH)\\n\\n🌪️ Day 1 Tornado Outlook\",\"embeds\":[{\"image\":{\"url\":\"$URL1\"}}]}" \
+          ${{ secrets.DISCORD_WEBHOOK }}
+
+          sleep 2
+
+          # Day 2
+          curl -H "Content-Type: application/json" \
+          -d "{\"content\":\"🌪️ Day 2 Tornado Outlook\",\"embeds\":[{\"image\":{\"url\":\"$URL2\"}}]}" \
+          ${{ secrets.DISCORD_WEBHOOK }}
+
+          sleep 2
+
+          # Day 3
+          curl -H "Content-Type: application/json" \
+          -d "{\"content\":\"🌪️ Day 3 Severe Weather Outlook\",\"embeds\":[{\"image\":{\"url\":\"$URL3\"}}]}" \
           ${{ secrets.DISCORD_WEBHOOK }}
 
       # -------------------
