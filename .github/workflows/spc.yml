@@ -1,4 +1,4 @@
-name: SPC OH Hourly Post
+name: SPC OH Post
 
 on:
   workflow_dispatch:
@@ -19,7 +19,7 @@ jobs:
 
           # Header
           curl -H "Content-Type: application/json" \
-          -d "{\"content\":\"🚨 Hourly Update:\\n\\n🌪️ OH Day 1 Tornado Outlook\",\"embeds\":[{\"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP\"}}]}" \
+          -d "{\"content\":\"🚨 Update:\\n\\n🌪️ OH Day 1 Tornado Outlook\",\"embeds\":[{\"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP\"}}]}" \
           ${{ secrets.DISCORD_WEBHOOK }}
 
           sleep 2
