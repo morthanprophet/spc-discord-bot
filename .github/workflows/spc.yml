@@ -19,7 +19,7 @@ jobs:
 
           # Header
           curl -H "Content-Type: application/json" \
-          -d "{\"content\":\"🚨 Update:\\n\\n🌪️ OH Day 1 Tornado Outlook\",\"embeds\":[{\"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP\"}}]}" \
+          -d "{\"content\":\"🚨 Latest Update:\\n\\n🌪️ OH Day 1 Tornado Outlook\",\"embeds\":[{\"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP\"}}]}" \
           ${{ secrets.DISCORD_WEBHOOK }}
 
           sleep 2
@@ -33,5 +33,12 @@ jobs:
 
           # Day 3
           curl -H "Content-Type: application/json" \
-          -d "{\"content\":\"🌪️ OH Day 3 Severe Weather Outlook\",\"embeds\":[{\"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP\"}}]}" \
+          -d "{\"content\":\"🌩️ OH Day 3 Severe Weather Outlook\",\"embeds\":[{\"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP\"}}]}" \
+          ${{ secrets.DISCORD_WEBHOOK }}
+
+          sleep 2
+
+          # Day 4
+          curl -H "Content-Type: application/json" \
+          -d "{\"content\":\"🌩️ OH Day 4 Severe Weather Outlook\",\"embeds\":[{\"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody4_PROB.png?t=$TIMESTAMP\"}}]}" \
           ${{ secrets.DISCORD_WEBHOOK }}
