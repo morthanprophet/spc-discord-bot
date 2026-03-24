@@ -40,6 +40,7 @@ jobs:
               {
                 \"title\":\"⛈️ OH Day 5 Severe Weather Outlook\",
                 \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody5_PROB.png?t=$TIMESTAMP\"}
+              }
             ]
           }" \
           ${{ secrets.DISCORD_WEBHOOK }}
