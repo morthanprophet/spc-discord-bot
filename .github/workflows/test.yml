@@ -19,7 +19,7 @@ jobs:
 
           curl -H "Content-Type: application/json" \
           -d "{
-            \"content\":\"🔔 00:00PM Update\\n\\n🔁 Next Update: 00:00 PM\\n\\n",
+            \"content\":\"🔔 12:30PM Update\\n\\n🔁 Next Update: 4:00 PM\",
             \"embeds\":[
               {
                 \"title\":\"🌪️ OH Day 1 Tornado Outlook\",
@@ -30,15 +30,13 @@ jobs:
                 \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png?t=$TIMESTAMP\"}
               },
               {
-                \"title\":\"⛈️ OH Day 3 Severe Weather Outlook\",
+                \"title\":\"🌩️ OH Day 3 Severe Weather Outlook\",
                 \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP\"}
               },
               {
-                \"title\":\"⛈️ OH Day 4 Severe Weather Outlook\",
+                \"title\":\"🌩️ OH Day 4 Severe Weather Outlook\",
                 \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody4_PROB.png?t=$TIMESTAMP\"}
               }
             ]
           }" \
           ${{ secrets.DISCORD_WEBHOOK }}
-
-          
