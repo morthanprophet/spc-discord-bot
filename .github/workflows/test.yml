@@ -19,7 +19,7 @@ jobs:
 
           curl -H "Content-Type: application/json" \
           -d "{
-            \"content\":\"🔔 12:30PM Update\\n\\n🔁 Next Update: 4:00 PM\",
+            \"content\":\"🔔 12:30PM Update\\n\\n🔁 Next Update: 4:00 PM\\n\\n",
             \"embeds\":[
               {
                 \"title\":\"🌪️ OH Day 1 Tornado Outlook\",
@@ -39,12 +39,6 @@ jobs:
               }
             ]
           }" \
-          ${{ secrets.DISCORD_WEBHOOK }}
-
-          sleep 2
-
-          curl -H "Content-Type: application/json" \
-          -d "{\"content\":\"⛈️ **Extended Outlooks**\\n\\n[Day 3](https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP)\\n[Day 4](https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody4_PROB.png?t=$TIMESTAMP)\"}" \
           ${{ secrets.DISCORD_WEBHOOK }}
 
           
