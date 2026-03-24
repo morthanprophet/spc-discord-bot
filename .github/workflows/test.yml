@@ -1,4 +1,4 @@
-name: SPC OH Post 1230
+name: SPC OH Post TEST
 
 on:
   workflow_dispatch:
