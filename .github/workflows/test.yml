@@ -44,7 +44,7 @@ jobs:
           sleep 2
 
           curl -H "Content-Type: application/json" \
-          -d "{\"content\":\"🌩️ **Extended Outlooks**\\n\\n[OH Day 3 Severe Weather Outlook](https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP)\\n[OH Day 4 Severe Weather Outlook](https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody4_PROB.png?t=$TIMESTAMP)\"}" \
-          ${{ secrets.DISCORD_WEBHOOK }
+          -d "{\"content\":\"⛈️ **Extended Outlooks**\\n\\n[Day 3](https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP)\\n[Day 4](https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody4_PROB.png?t=$TIMESTAMP)\"}" \
+          ${{ secrets.DISCORD_WEBHOOK }}
 
           
