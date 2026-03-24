@@ -1,4 +1,4 @@
-name: SPC OH Post 900
+name: SPC OH Post 2100
 
 on:
   workflow_dispatch:
@@ -17,28 +17,30 @@ jobs:
         run: |
           TIMESTAMP=$(date +%s)
 
-          # Header
           curl -H "Content-Type: application/json" \
-          -d "{\"content\":\"🔔 9:00PM Update\\n\\n🔁 Next Update: Tommorow @ 12:30 PM\\n\\n🌪️ OH Day 1 Tornado Outlook\",\"embeds\":[{\"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP\"}}]}" \
-          ${{ secrets.DISCORD_WEBHOOK }}
-
-          sleep 2
-
-          # Day 2
-          curl -H "Content-Type: application/json" \
-          -d "{\"content\":\"🌪️ OH Day 2 Tornado Outlook\",\"embeds\":[{\"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png?t=$TIMESTAMP\"}}]}" \
-          ${{ secrets.DISCORD_WEBHOOK }}
-
-          sleep 2
-
-          # Day 3
-          curl -H "Content-Type: application/json" \
-          -d "{\"content\":\"🌩️ OH Day 3 Severe Weather Outlook\",\"embeds\":[{\"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP\"}}]}" \
-          ${{ secrets.DISCORD_WEBHOOK }}
-
-          sleep 2
-
-          # Day 4
-          curl -H "Content-Type: application/json" \
-          -d "{\"content\":\"🌩️ OH Day 4 Severe Weather Outlook\",\"embeds\":[{\"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody4_PROB.png?t=$TIMESTAMP\"}}]}" \
+          -d "{
+            \"content\":\"🔔 9:00PM Update!\\n\\n🔁 Next Update: Tomorrow @ 12:30 PM\",
+            \"embeds\":[
+              {
+                \"title\":\"🌪️ OH Day 1 Tornado Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP\"}
+              },
+              {
+                \"title\":\"🌪️ OH Day 2 Tornado Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png?t=$TIMESTAMP\"}
+              },
+              {
+                \"title\":\"⛈️ OH Day 3 Severe Weather Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP\"}
+              },
+              {
+                \"title\":\"⛈️ OH Day 4 Severe Weather Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody4_PROB.png?t=$TIMESTAMP\"}
+              },
+              {
+                \"title\":\"⛈️ OH Day 5 Severe Weather Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody5_PROB.png?t=$TIMESTAMP\"}
+              }
+            ]
+          }" \
           ${{ secrets.DISCORD_WEBHOOK }}
