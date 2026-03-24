@@ -17,7 +17,22 @@ jobs:
         run: |
           TIMESTAMP=$(date +%s)
 
-          # Day 3 + Day 4 (COMBINED TEXT LINKS)
           curl -H "Content-Type: application/json" \
-          -d "{\"content\":\"Extended Outlooks\\n\\n⛈️ [Day 3](https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP),⛈️ [Day 4](https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody4_PROB.png?t=$TIMESTAMP)\"}" \
+          -d "{
+            \"content\":\"🔔 12:30PM Update\\n\\n🔁 Next Update: 4:00 PM\\n\\n🌪️ OH Day 1 Tornado Outlook\\n🌪️ OH Day 2 Tornado Outlook\\n🌩️ OH Day 3 Severe Weather Outlook\\n🌩️ OH Day 4 Severe Weather Outlook\",
+            \"embeds\":[
+              {
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP\"}
+              },
+              {
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png?t=$TIMESTAMP\"}
+              },
+              {
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP\"}
+              },
+              {
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody4_PROB.png?t=$TIMESTAMP\"}
+              }
+            ]
+          }" \
           ${{ secrets.DISCORD_WEBHOOK }}
