@@ -43,6 +43,6 @@ jobs:
           
           curl -H "Content-Type: application/json" \
           -d "{
-            \"content\":\"⛈️ Extended Outlooks: [Day 3](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP>) / [Day 4](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody4_PROB.png?t=$TIMESTAMP>) / [Day 5](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody5_PROB.png?t=$TIMESTAMP>) / [Day 6](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody6_PROB.png?t=$TIMESTAMP>) / [Day 7](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody7_PROB.png?t=$TIMESTAMP>) / [Day 8](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody8_PROB.png?t=$TIMESTAMP>\\n🔁 Next Update: 12:30PM)\"
+            \"content\":\"⛈️ Extended Outlooks: [Day 3](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP>) / [Day 4](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody4_PROB.png?t=$TIMESTAMP>) / [Day 5](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody5_PROB.png?t=$TIMESTAMP>) / [Day 6](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody6_PROB.png?t=$TIMESTAMP>) / [Day 7](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody7_PROB.png?t=$TIMESTAMP>) / [Day 8](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody8_PROB.png?t=$TIMESTAMP>)\\n🔁 Next Update: 12:30PM)\"
           }" \
           ${{ secrets.DISCORD_WEBHOOK }}
