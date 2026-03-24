@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Post All Days
         run: |
-          curl -H "Contact-Type: application/json" \
+         curl -H "Content-Type: application/json" \
           -d "{
             \"content\":\"🔔 TEST Update!\\n\\n🔁 Next Update: 0:00\"
           }" \
