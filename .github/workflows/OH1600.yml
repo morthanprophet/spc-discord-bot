@@ -32,14 +32,6 @@ jobs:
               {
                 \"title\":\"⛈️ OH Day 3 Severe Weather Outlook\",
                 \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP\"}
-              },
-              {
-                \"title\":\"⛈️ OH Day 4 Severe Weather Outlook\",
-                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody4_PROB.png?t=$TIMESTAMP\"}
-              },
-              {
-                \"title\":\"⛈️ OH Day 5 Severe Weather Outlook\",
-                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody5_PROB.png?t=$TIMESTAMP\"}
               }
             ]
           }" \
