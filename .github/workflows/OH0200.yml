@@ -1,0 +1,38 @@
+name: SPC OH Post 0200
+
+on:
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Force update"
+        required: false
+        default: "false"
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Post All Days
+        run: |
+          TIMESTAMP=$(date +%s)
+
+          curl -H "Content-Type: application/json" \
+          -d "{
+            \"content\":\"🔔 2:00AM Update!\\n\\n🔁 Next Update: 9:00 AM\",
+            \"embeds\":[
+              {
+                \"title\":\"🌪️ OH Day 1 Tornado Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP\"}
+              },
+              {
+                \"title\":\"🌪️ OH Day 2 Tornado Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png?t=$TIMESTAMP\"}
+              },
+              {
+                \"title\":\"🌩️ OH Day 3 Severe Weather Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP\"}
+              }
+            ]
+          }" \
+          ${{ secrets.DISCORD_WEBHOOK }}
