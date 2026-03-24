@@ -17,6 +17,7 @@ jobs:
         run: |
           TIMESTAMP=$(date +%s)
 
+          # Day 3 + Day 4 (COMBINED TEXT LINKS)
           curl -H "Content-Type: application/json" \
-          -d "{\"content\":\"⛈️" Day 3:\n<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP>\"}" \
+          -d "{\"content\":\"Extended Outlooks\\n\\n⛈️ [Day 3](https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP),⛈️ [Day 4](https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody4_PROB.png?t=$TIMESTAMP)\"}" \
           ${{ secrets.DISCORD_WEBHOOK }}
