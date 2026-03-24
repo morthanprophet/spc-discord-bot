@@ -32,6 +32,8 @@ jobs:
             ]
           }" \
           ${{ secrets.DISCORD_WEBHOOK }}
+
+          sleep 2
           
           curl -H "Content-Type: application/json" \
           -d "{
