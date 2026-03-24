@@ -19,7 +19,7 @@ jobs:
 
           curl -H "Content-Type: application/json" \
           -d "{
-            \"content\":\"🔔 9:00PM Update!\\n\\n🔁 Next Update: Tomorrow @ 12:30 PM\",
+            \"content\":\"🔔 9:00PM Update!\\n\\n🔁 Next Update: Tomorrow @ 2:00 AM\",
             \"embeds\":[
               {
                 \"title\":\"🌪️ OH Day 1 Tornado Outlook\",
@@ -32,14 +32,6 @@ jobs:
               {
                 \"title\":\"⛈️ OH Day 3 Severe Weather Outlook\",
                 \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP\"}
-              },
-              {
-                \"title\":\"⛈️ OH Day 4 Severe Weather Outlook\",
-                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody4_PROB.png?t=$TIMESTAMP\"}
-              },
-              {
-                \"title\":\"⛈️ OH Day 5 Severe Weather Outlook\",
-                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody5_PROB.png?t=$TIMESTAMP\"}
               }
             ]
           }" \
