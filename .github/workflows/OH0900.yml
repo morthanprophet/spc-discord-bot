@@ -15,11 +15,17 @@ jobs:
     steps:
       - name: Post All Days
         run: |
+         curl -H "Content-Type: application/json" \
+          -d "{
+            \"content\":\"🔔 9:00AM Update!\\n\\n🔁 Next Update: 12:30PM\"
+          }" \
+          ${{ secrets.DISCORD_WEBHOOK }}
+          
+          sleep 2
+          
           TIMESTAMP=$(date +%s)
-
           curl -H "Content-Type: application/json" \
           -d "{
-            \"content\":\"🔔 9:00AM Update!\\n\\n🔁 Next Update: 12:30 PM\",
             \"embeds\":[
               {
                 \"title\":\"🌪️ OH Day 1 Tornado Outlook\",
@@ -28,11 +34,15 @@ jobs:
               {
                 \"title\":\"🌪️ OH Day 2 Tornado Outlook\",
                 \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png?t=$TIMESTAMP\"}
-              },
-              {
-                \"title\":\"🌩️ OH Day 3 Severe Weather Outlook\",
-                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP\"}
               }
             ]
+          }" \
+          ${{ secrets.DISCORD_WEBHOOK }}
+
+          sleep 3
+          
+          curl -H "Content-Type: application/json" \
+          -d "{
+            \"content\":\"⛈️ Extended Outlooks: [Day 3](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP>) / [Day 4](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody4_PROB.png?t=$TIMESTAMP>) / [Day 5](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody5_PROB.png?t=$TIMESTAMP>) / [Day 6](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody6_PROB.png?t=$TIMESTAMP>) / [Day 7](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody7_PROB.png?t=$TIMESTAMP>) / [Day 8](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody8_PROB.png?t=$TIMESTAMP>)\"
           }" \
           ${{ secrets.DISCORD_WEBHOOK }}
