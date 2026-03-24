@@ -16,6 +16,7 @@ jobs:
       - name: Post All Days
         run: |
           TIMESTAMP=$(date +%s)
+          
           curl -H "Contact-Type: application/json" \
           -d "{
             \"content\":\"🔔 TEST Update!\\n\\n🔁 Next Update: 0:00\"
