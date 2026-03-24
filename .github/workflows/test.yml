@@ -17,9 +17,17 @@ jobs:
         run: |
           TIMESTAMP=$(date +%s)
 
+          curl -H "Contact-Type: application/json" \
+          -d "{
+            \"content\":\"🔔 TEST Update!\\n\\n🔁 Next Update: 0:00\"
+          }" \
+
+          sleep 2
+          
+          ${{ secrets.DISCORD_WEBHOOK }}
+
           curl -H "Content-Type: application/json" \
           -d "{
-            \"content\":\"🔔 TEST Update!\\n\\n🔁 Next Update: 0:00\",
             \"embeds\":[
               {
                 \"title\":\"🌪️ OH Day 1 Tornado Outlook\",
@@ -37,7 +45,7 @@ jobs:
           
           curl -H "Content-Type: application/json" \
           -d "{
-            \"content\":\"🌩️ [Day 3](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP>) 🌩️ [Day 4](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody4_PROB.png?t=$TIMESTAMP>) 🌩️ [Day 5](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody5_PROB.png?t=$TIMESTAMP>) 🌩️ [Day 6](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody6_PROB.png?t=$TIMESTAMP>) 🌩️ [Day 7](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody7_PROB.png?t=$TIMESTAMP>) 🌩️ [Day 8](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody8_PROB.png?t=$TIMESTAMP>)\"
+            \"content\":\"🌩️ Extended Outlooks: [Day 3](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP>) / [Day 4](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody4_PROB.png?t=$TIMESTAMP>) / [Day 5](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody5_PROB.png?t=$TIMESTAMP>) / [Day 6](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody6_PROB.png?t=$TIMESTAMP>) / [Day 7](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody7_PROB.png?t=$TIMESTAMP>) / [Day 8](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody8_PROB.png?t=$TIMESTAMP>)\"
           }" \
           ${{ secrets.DISCORD_WEBHOOK }}
             
