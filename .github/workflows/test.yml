@@ -19,7 +19,7 @@ jobs:
 
           curl -H "Content-Type: application/json" \
           -d "{
-            \"content\":\"🔔 12:30PM Update\\n\\n🔁 Next Update: 4:00 PM\\n\\n",
+            \"content\":\"🔔 12:30PM Update\\n\\n🔁 Next Update: 4:00 PM\",
             \"embeds\":[
               {
                 \"title\":\"🌪️ OH Day 1 Tornado Outlook\",
