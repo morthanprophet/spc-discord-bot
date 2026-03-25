@@ -28,7 +28,8 @@ jobs:
           -d "{
             \"embeds\":[
               {
-                \"title\":\"⛈️ OH Day 1 Severe Outlook + 🌪️ [Tornado Outlook](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP>)\",
+                \"title\":\"⛈️ OH Day 1 Severe Outlook \",
+                \"url":\":\"+ 🌪️ [Tornado Outlook](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP>)",
                 \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP\"}
               },
               {
