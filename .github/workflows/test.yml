@@ -15,7 +15,6 @@ jobs:
     steps:
       - name: Post All Days
         run: |
-         TIMESTAMP=$(date +%s)
          curl -H "Content-Type: application/json" \
           -d "{
             \"content\":\"🔔 TEST Update!\\n\\n 🔁 Next Update: 0:00XM"\"
@@ -23,7 +22,8 @@ jobs:
           ${{ secrets.DISCORD_WEBHOOK }}
 
           sleep 2
-          
+
+          TIMESTAMP=$(date +%s)
           curl -H "Content-Type: application/json" \
           -d "{
             \"embeds\":[
@@ -41,6 +41,7 @@ jobs:
 
           sleep 2
 
+          TIMESTAMP=$(date +%s)
           curl -H "Content-Type: application/json" \
           -d "{
             \"embeds\":[
