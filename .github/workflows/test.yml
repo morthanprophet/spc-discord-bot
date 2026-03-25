@@ -29,7 +29,7 @@ jobs:
             \"embeds\":[
               {
                 \"title\":\"Day 1: ⛈️ Severe Outlook + 🌪️ Tornado Outlook\",
-                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_PROB.png?t=$TIMESTAMP\"}
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1.png?t=$TIMESTAMP\"}
               },
               {
                 \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP\"}
@@ -51,6 +51,7 @@ jobs:
           curl -H "Content-Type: application/json" \
           -d "{
             \"embeds\":[
+              {
                 \"title\":\"⛈️ OH Day 3 Severe Outlook\",
                 \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP\"}
               },
