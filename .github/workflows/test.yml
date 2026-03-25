@@ -47,11 +47,11 @@ jobs:
             \"embeds\":[
               {
                 \"title\":\"⛈️ OH Day 1 Severe Outlook\",
-                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_PROB.png?t=$TIMESTAMP\"}
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1.png?t=$TIMESTAMP\"}
               },
               {
                 \"title\":\"⛈️ OH Day 2 Severe Outlook\",
-                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_PROB.png?t=$TIMESTAMP\"}
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2.png?t=$TIMESTAMP\"}
               },
               {
                 \"title\":\"⛈️ OH Day 3 Severe Outlook\",
