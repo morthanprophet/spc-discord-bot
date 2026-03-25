@@ -28,23 +28,23 @@ jobs:
           -d "{
             \"embeds\":[
               {
-                \"content\":\"⛈️ OH Day 1 Severe Outlook + 🌪️ [Tornado Outlook](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP>)\",
+                \"title\":\"⛈️ OH Day 1 Severe Outlook + 🌪️ [Tornado Outlook](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP>)\",
                 \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP\"}
               },
               {
-                \"content\":\"⛈️ OH Day 2 Severe Outlook + [Tornado Outlook](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png?t=$TIMESTAMP>)\",
+                \"title\":\"⛈️ OH Day 2 Severe Outlook + [Tornado Outlook](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png?t=$TIMESTAMP>)\",
                 \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png?t=$TIMESTAMP\"}
               },
               {
-                \"content\":\"⛈️ OH Day 3 Severe Outlook\",
+                \"title\":\"⛈️ OH Day 3 Severe Outlook\",
                 \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP\"}
               },
               {
-                \"content\":\"⛈️ OH Day 4 Severe Outlook\",
+                \"title\":\"⛈️ OH Day 4 Severe Outlook\",
                 \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody4_PROB.png?t=$TIMESTAMP\"}
               },
               {
-                \"content\":\"⛈️ OH Day 5 Severe Outlook\",
+                \"title\":\"⛈️ OH Day 5 Severe Outlook\",
                 \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody5_PROB.png?t=$TIMESTAMP\"}
               }
             ]
