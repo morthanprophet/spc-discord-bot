@@ -17,12 +17,12 @@ jobs:
         run: |
          curl -H "Content-Type: application/json" \
           -d "{
-            \"content\":\"🔔 12:30PM Update!\"
+            \"content\":\"🔔 12:30PM Update!\\n\\n 🔁 Next Update: 4:00PM\"
           }" \
           ${{ secrets.DISCORD_WEBHOOK }}
-          
+
           sleep 2
-          
+
           TIMESTAMP=$(date +%s)
           curl -H "Content-Type: application/json" \
           -d "{
@@ -39,10 +39,32 @@ jobs:
           }" \
           ${{ secrets.DISCORD_WEBHOOK }}
 
-          sleep 3
-          
+          sleep 2
+
+          TIMESTAMP=$(date +%s)
           curl -H "Content-Type: application/json" \
           -d "{
-            \"content\":\"⛈️ Extended Outlooks: [Day 3](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP>) / [Day 4](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody4_PROB.png?t=$TIMESTAMP>) / [Day 5](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody5_PROB.png?t=$TIMESTAMP>) / [Day 6](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody6_PROB.png?t=$TIMESTAMP>) / [Day 7](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody7_PROB.png?t=$TIMESTAMP>) / [Day 8](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody8_PROB.png?t=$TIMESTAMP>)\\n🔁 Next Update: 4:00PM\"
+            \"embeds\":[
+              {
+                \"title\":\"⛈️ OH Day 1 Severe Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1.png?t=$TIMESTAMP\"}
+              },
+              {
+                \"title\":\"⛈️ OH Day 2 Severe Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2.png?t=$TIMESTAMP\"}
+              },
+              {
+                \"title\":\"⛈️ OH Day 3 Severe Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP\"}
+              },
+              {
+                \"title\":\"⛈️ OH Day 4 Severe Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody4_PROB.png?t=$TIMESTAMP\"}
+              },
+              {
+                \"title\":\"⛈️ OH Day 5 Severe Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody5_PROB.png?t=$TIMESTAMP\"}
+              }
+            ]
           }" \
           ${{ secrets.DISCORD_WEBHOOK }}
