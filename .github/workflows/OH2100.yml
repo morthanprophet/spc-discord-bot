@@ -39,7 +39,7 @@ jobs:
           }" \
           ${{ secrets.DISCORD_WEBHOOK }}
 
-          sleep 2
+          sleep 5
 
           TIMESTAMP=$(date +%s)
           curl -H "Content-Type: application/json" \
