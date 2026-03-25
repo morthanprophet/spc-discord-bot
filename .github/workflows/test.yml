@@ -20,6 +20,8 @@ jobs:
             \"content\":\"🔔 TEST Update!\\n\\n 🔁 Next Update: 0:00XM"
           }" \
           ${{ secrets.DISCORD_WEBHOOK }}
+
+          sleep 2
           
           TIMESTAMP=$(date +%s)
           curl -H "Content-Type: application/json" \
@@ -38,7 +40,8 @@ jobs:
           ${{ secrets.DISCORD_WEBHOOK }}
 
           sleep 2
-         
+
+          TIMESTAMP=$(date +%s)
           curl -H "Content-Type: application/json" \
           -d "{
             \"embeds\":[
@@ -48,7 +51,7 @@ jobs:
               },
               {
                 \"title\":\"⛈️ OH Day 2 Severe Outlook\",
-                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png?t=$TIMESTAMP\"}
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_PROB.png?t=$TIMESTAMP\"}
               },
               {
                 \"title\":\"⛈️ OH Day 3 Severe Outlook\",
