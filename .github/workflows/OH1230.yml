@@ -17,7 +17,7 @@ jobs:
         run: |
          curl -H "Content-Type: application/json" \
           -d "{
-            \"content\":\"🔔 12:30PM Update!\\n\\n 🔁 Next Update: 4:00PM\"
+            \"content\":\"🔔 12:30PM Update! / 🔁 Next Update: 4:00PM\"
           }" \
           ${{ secrets.DISCORD_WEBHOOK }}
 
@@ -28,12 +28,18 @@ jobs:
           -d "{
             \"embeds\":[
               {
-                \"title\":\"🌪️ OH Day 1 Tornado Outlook\",
+                \"title\":\"Day 1: ⛈️ Severe Outlook + 🌪️ Tornado Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1.png?t=$TIMESTAMP\"}
+              },
+              {
                 \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP\"}
               },
               {
-                \"title\":\"🌪️ OH Day 2 Tornado Outlook\",
-                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png?t=$TIMESTAMP\"}
+                \"title\":\"Day 2: ⛈️ Severe Outlook + 🌪️ Tornado Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2.png?t=$TIMESTAMP\"}
+              },
+              {
+              \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png?t=$TIMESTAMP\"}
               }
             ]
           }" \
@@ -45,14 +51,6 @@ jobs:
           curl -H "Content-Type: application/json" \
           -d "{
             \"embeds\":[
-              {
-                \"title\":\"⛈️ OH Day 1 Severe Outlook\",
-                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1.png?t=$TIMESTAMP\"}
-              },
-              {
-                \"title\":\"⛈️ OH Day 2 Severe Outlook\",
-                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2.png?t=$TIMESTAMP\"}
-              },
               {
                 \"title\":\"⛈️ OH Day 3 Severe Outlook\",
                 \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP\"}
