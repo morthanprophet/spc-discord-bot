@@ -40,6 +40,7 @@ jobs:
               },
               {
               \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png?t=$TIMESTAMP\"}
+              }
             ]
           }" \
           ${{ secrets.DISCORD_WEBHOOK }}
