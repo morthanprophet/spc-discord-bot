@@ -17,7 +17,7 @@ jobs:
         run: |
          curl -H "Content-Type: application/json" \
           -d "{
-            \"content\":\"🔔 TEST Update!\"
+            \"content\":\"🔔 TEST Update!\\n\\n 🌪️ [Day 1 Tornado](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP>) 🌪️ [Day 2 Tornado](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png?t=$TIMESTAMP>)\"
           }" \
           ${{ secrets.DISCORD_WEBHOOK }}
           
@@ -28,13 +28,12 @@ jobs:
           -d "{
             \"embeds\":[
               {
-                \"title\":\"⛈️ OH Day 1 Severe Outlook \",
-                \"url":\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP",
-                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP\"}
+                \"title\":\"⛈️ OH Day 1 Severe Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_PROB.png?t=$TIMESTAMP\"}
               },
               {
-                \"title\":\"⛈️ OH Day 2 Severe Outlook + [Tornado Outlook](<https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png?t=$TIMESTAMP>)\",
-                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png?t=$TIMESTAMP\"}
+                \"title\":\"⛈️ OH Day 2 Severe Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_PROB.png?t=$TIMESTAMP\"}
               },
               {
                 \"title\":\"⛈️ OH Day 3 Severe Outlook\",
