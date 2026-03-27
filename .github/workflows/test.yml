@@ -99,8 +99,19 @@ jobs:
       - name: Post to Discord
         if: steps.compare.outputs.changed == 'true'
         run: |
+          TIMESTAMP=$(date +%s)
           curl -H "Content-Type: application/json" \
-          -d "{\"content\":\"🌪️ Ohio Tornado Risk Update → ${{ steps.risk.outputs.status }}\"}" \
+          -d "{
+            \"embeds\":[
+              {
+                \"title\":\"🚨 Day 1 & Day 2:🌪️ Tornado Outlook Update!\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP\"}
+              },
+              {
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2_TORN.png?t=$TIMESTAMP\"}
+              }
+            ]
+          }" \
           ${{ secrets.DISCORD_WEBHOOK }}
 
       - name: Save new hash
