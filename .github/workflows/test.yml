@@ -1,4 +1,4 @@
-name: SPC OH Tornado Risk (Day 1 & 2)
+name: SPC OH Tornado Risk
 
 on:
   workflow_dispatch:
@@ -104,7 +104,7 @@ jobs:
           -d "{
             \"embeds\":[
               {
-                \"title\":\"🚨 Day 1 & Day 2:🌪️ Tornado Outlook Update!\",
+                \"title\":\"🚨 New Tornado Outlook Detected for Ohio!\",
                 \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP\"}
               },
               {
