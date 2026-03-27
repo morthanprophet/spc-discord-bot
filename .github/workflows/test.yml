@@ -1,4 +1,4 @@
-name: SPC OH Post TEST
+name: SPC OH Post SLOW
 
 on:
   workflow_dispatch:
@@ -17,7 +17,7 @@ jobs:
         run: |
          curl -H "Content-Type: application/json" \
           -d "{
-            \"content\":\"🔔 TEST Update! / 🔁 Next Update: 0:00XM\"
+            \"content\":\"🔔 Daily Update! / 🔁 [Slowmode Active]\"
           }" \
           ${{ secrets.DISCORD_WEBHOOK }}
 
