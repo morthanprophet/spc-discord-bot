@@ -127,23 +127,19 @@ jobs:
           -d "{
             \"embeds\":[
               {
-                \"title\":\"⛈️ OH Day 1 Severe Outlook\",
+                \"title\":\"🚨 New Severe Outlooks Detected for Ohio!\",
                 \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1.png?t=$TIMESTAMP\"}
               },
               {
-                \"title\":\"⛈️ OH Day 2 Severe Outlook\",
                 \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2.png?t=$TIMESTAMP\"}
               },
               {
-                \"title\":\"⛈️ OH Day 3 Severe Outlook\",
                 \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP\"}
               },
               {
-                \"title\":\"⛈️ OH Day 4 Severe Outlook\",
                 \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody4_PROB.png?t=$TIMESTAMP\"}
               },
               {
-                \"title\":\"⛈️ OH Day 5 Severe Outlook\",
                 \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody5_PROB.png?t=$TIMESTAMP\"}
               }
             ]
