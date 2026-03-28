@@ -1,4 +1,4 @@
-name: SPC OH Post Scheduled
+name: SPC OH Outlook Post
 
 on:
   workflow_dispatch:
