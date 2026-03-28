@@ -104,7 +104,7 @@ jobs:
           -d "{
             \"embeds\":[
               {
-                \"title\":\"🚨 New Tornado Outlook Detected for Ohio!\",
+                \"title\":\"🚨 New Tornado Outlooks Detected for Ohio!\",
                 \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP\"}
               },
               {
