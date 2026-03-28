@@ -1,0 +1,136 @@
+name: SPC OH Severe Risk (Day 1–5)
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+jobs:
+  check-risk:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm install @turf/turf
+
+      - name: Download SPC Outlooks
+        run: |
+          curl -s https://www.spc.noaa.gov/products/outlook/day1otlk_cat.lyr.geojson -o d1.json
+          curl -s https://www.spc.noaa.gov/products/outlook/day2otlk_cat.lyr.geojson -o d2.json
+          curl -s https://www.spc.noaa.gov/products/outlook/day3otlk_cat.lyr.geojson -o d3.json
+          curl -s https://www.spc.noaa.gov/products/exper/day4-8/day4prob.lyr.geojson -o d4.json
+          curl -s https://www.spc.noaa.gov/products/exper/day4-8/day5prob.lyr.geojson -o d5.json
+
+      - name: Get Ohio boundary
+        run: |
+          curl -s https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json -o states.json
+          jq '.features[] | select(.properties.name=="Ohio")' states.json > ohio.json
+
+      - name: Compute Ohio severe risk
+        id: risk
+        run: |
+          node << 'EOF'
+          const fs = require('fs');
+          const turf = require('@turf/turf');
+
+          const ohio = JSON.parse(fs.readFileSync('ohio.json'));
+
+          const catOrder = ["TSTM","MRGL","SLGT","ENH","MDT","HIGH"];
+
+          function getCatRisk(file) {
+            const data = JSON.parse(fs.readFileSync(file));
+            let highest = "NONE";
+
+            for (const f of data.features) {
+              const risk = f.properties.LABEL;
+
+              if (!catOrder.includes(risk)) continue;
+
+              try {
+                if (turf.booleanIntersects(f, ohio)) {
+                  if (
+                    highest === "NONE" ||
+                    catOrder.indexOf(risk) > catOrder.indexOf(highest)
+                  ) {
+                    highest = risk;
+                  }
+                }
+              } catch (e) {}
+            }
+
+            return highest;
+          }
+
+          function getProbRisk(file) {
+            const data = JSON.parse(fs.readFileSync(file));
+            let risk = "NONE";
+
+            for (const f of data.features) {
+              try {
+                if (turf.booleanIntersects(f, ohio)) {
+                  risk = "RISK"; // any 15% area counts
+                }
+              } catch (e) {}
+            }
+
+            return risk;
+          }
+
+          const d1 = getCatRisk('d1.json');
+          const d2 = getCatRisk('d2.json');
+          const d3 = getCatRisk('d3.json');
+          const d4 = getProbRisk('d4.json');
+          const d5 = getProbRisk('d5.json');
+
+          const result = `D1:${d1}|D2:${d2}|D3:${d3}|D4:${d4}|D5:${d5}`;
+
+          fs.writeFileSync('risk.txt', result);
+          console.log(result);
+          EOF
+
+          echo "status=$(cat risk.txt)" >> $GITHUB_OUTPUT
+
+      - name: Generate hash
+        id: hash
+        run: |
+          echo "${{ steps.risk.outputs.status }}" | sha256sum | cut -d ' ' -f1 > hash.txt
+          echo "hash=$(cat hash.txt)" >> $GITHUB_OUTPUT
+
+      - name: Read previous hash
+        id: oldhash
+        run: |
+          if [ -f previous_hash_severe.txt ]; then
+            echo "oldhash=$(cat previous_hash_severe.txt)" >> $GITHUB_OUTPUT
+          else
+            echo "oldhash=none" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Compare hashes
+        id: compare
+        run: |
+          if [ "${{ steps.hash.outputs.hash }}" != "${{ steps.oldhash.outputs.oldhash }}" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Post to Discord
+        if: steps.compare.outputs.changed == 'true'
+        run: |
+          curl -H "Content-Type: application/json" \
+          -d "{\"content\":\"⚠️ Ohio Severe Risk Update → ${{ steps.risk.outputs.status }}\"}" \
+          ${{ secrets.DISCORD_WEBHOOK }}
+
+      - name: Save new hash
+        run: |
+          echo "${{ steps.hash.outputs.hash }}" > previous_hash_severe.txt
+
+      - name: Commit new hash
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git add previous_hash_severe.txt
+          git commit -m "Update severe risk hash" || echo "No changes"
+          git push
