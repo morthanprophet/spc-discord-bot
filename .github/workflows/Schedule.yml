@@ -1,4 +1,4 @@
-name: SPC OH Post 0200
+name: SPC OH Post Scheduled
 
 on:
   workflow_dispatch:
@@ -17,7 +17,7 @@ jobs:
         run: |
          curl -H "Content-Type: application/json" \
           -d "{
-            \"content\":\"🔔 2:00AM Update! / 🔁 Next Update: 9:00AM\"
+            \"content\":\"🔔 OH Severe Weather Outlook Update!\"
           }" \
           ${{ secrets.DISCORD_WEBHOOK }}
 
