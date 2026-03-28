@@ -1,4 +1,4 @@
-name: SPC OH Severe Risk (Day 1–5)
+name: SPC OH Severe Risk
 
 on:
   workflow_dispatch:
@@ -122,8 +122,32 @@ jobs:
       - name: Post to Discord
         if: steps.compare.outputs.changed == 'true'
         run: |
+          TIMESTAMP=$(date +%s)
           curl -H "Content-Type: application/json" \
-          -d "{\"content\":\"⚠️ Ohio Severe Risk Update → ${{ steps.risk.outputs.status }}\"}" \
+          -d "{
+            \"embeds\":[
+              {
+                \"title\":\"⛈️ OH Day 1 Severe Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1.png?t=$TIMESTAMP\"}
+              },
+              {
+                \"title\":\"⛈️ OH Day 2 Severe Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody2.png?t=$TIMESTAMP\"}
+              },
+              {
+                \"title\":\"⛈️ OH Day 3 Severe Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody3_PROB.png?t=$TIMESTAMP\"}
+              },
+              {
+                \"title\":\"⛈️ OH Day 4 Severe Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody4_PROB.png?t=$TIMESTAMP\"}
+              },
+              {
+                \"title\":\"⛈️ OH Day 5 Severe Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody5_PROB.png?t=$TIMESTAMP\"}
+              }
+            ]
+          }" \
           ${{ secrets.DISCORD_WEBHOOK }}
 
       - name: Save new hash
