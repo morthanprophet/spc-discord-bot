@@ -1,9 +1,12 @@
 name: SPC OH Severe Risk (Day 1–5)
 
 on:
-  schedule:
-    - cron: "*/15 * * * *"
   workflow_dispatch:
+    inputs:
+      force:
+        description: "Force update"
+        required: false
+        default: "false"
 
 jobs:
   check-risk:
