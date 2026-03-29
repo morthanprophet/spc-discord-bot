@@ -1,0 +1,32 @@
+name: SPC Post OH Day 1
+
+on:
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Force update"
+        required: false
+        default: "false"
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Post
+        run: |
+         TIMESTAMP=$(date +%s)
+          curl -H "Content-Type: application/json" \
+          -d "{
+            \"embeds\":[
+              {
+                \"title\":\"🚨 New Day 1: ⛈️ Severe Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1.png?t=$TIMESTAMP\"}
+              },
+              {
+                \"title\":\"🚨 New Day 1: 🌪️ Tornado Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody1_TORN.png?t=$TIMESTAMP\"}
+              }
+            ]
+          }" \
+          ${{ secrets.DISCORD_WEBHOOK }}
