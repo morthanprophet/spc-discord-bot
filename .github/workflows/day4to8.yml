@@ -1,0 +1,44 @@
+name: SPC Post OH Day 4-8
+
+on:
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Force update"
+        required: false
+        default: "false"
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Post
+        run: |
+         TIMESTAMP=$(date +%s)
+          curl -H "Content-Type: application/json" \
+          -d "{
+            \"embeds\":[
+              {
+                \"title\":\"🚨 New Day 4: ⛈️ Severe Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody4_PROB.png?t=$TIMESTAMP\"}
+              },
+              {
+                \"title\":\"🚨 New Day 5: ⛈️ Severe Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody5_PROB.png?t=$TIMESTAMP\"}
+              },
+              {
+                \"title\":\"🚨 New Day 6: ⛈️ Severe Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody6_PROB.png?t=$TIMESTAMP\"}
+              },
+              {
+                \"title\":\"🚨 New Day 7: ⛈️ Severe Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody7_PROB.png?t=$TIMESTAMP\"}
+              },
+              {
+                \"title\":\"🚨 New Day 8: ⛈️ Severe Outlook\",
+                \"image\":{\"url\":\"https://www.spc.noaa.gov/partners/outlooks/state/images/OH_swody8_PROB.png?t=$TIMESTAMP\"}
+              }
+            ]
+          }" \
+          ${{ secrets.DISCORD_WEBHOOK }}
